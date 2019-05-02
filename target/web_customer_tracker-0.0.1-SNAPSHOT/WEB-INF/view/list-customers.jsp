@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 
@@ -28,6 +29,11 @@
 			<input type="button" value="Add Customer"
 				onClick="window.location.href='showFormForAdd';return false;"
 				class="add-button">
+			<!-- add a search box -->
+			<form:form action="search" method="Get">
+				Search Customer: <input type="text" name="theSearchName" />
+				<input type="submit" value="search" class="add-button"> 
+			</form:form>
 			<!--  add our html table here -->
 
 			<table>
@@ -45,6 +51,11 @@
 					<c:url var="updateLink" value="/customer/showFormForUpdate">
 					 <c:param name="customerId" value="${tempCustomer.id}"></c:param>
 					</c:url>
+					
+					<!-- Construct an delete link using customer id -->
+					<c:url var="deleteLink" value="/customer/deleteCustomer">
+					 <c:param name="customerId" value="${tempCustomer.id}"></c:param>
+					</c:url>
 					<tr>
 						<td>${tempCustomer.firstName}</td>
 						<td>${tempCustomer.lastName}</td>
@@ -52,6 +63,8 @@
 						<td>
 							<!--  Show Update Link -->
 							<a href="${updateLink}">Update</a>
+							|
+							<a href="${deleteLink}" onClick="if(!(confirm('Are you sure you want to delete this customer?'))) return false">Delete</a>
 						</td>
 					</tr>
 
